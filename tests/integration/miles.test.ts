@@ -24,6 +24,14 @@ describe("POST /miles", () => {
     )
   });
 
+  it("should return error 409 if code already exists", async () => {
+    const trip = await generatePostMiles();
+    await generateMiles(trip.code);
+
+    const { status } = await api.post("/miles").send(trip);
+    expect(status).toBe(httpStatus.CONFLICT);
+  })
+
 })
 
 describe("GET /miles:code", () => {
