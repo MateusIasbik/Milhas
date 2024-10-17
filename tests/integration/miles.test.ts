@@ -3,7 +3,6 @@ import app from "../../src/app";
 import httpStatus from "http-status";
 import prisma from "database";
 import { generatePostMiles, generateMiles } from "./factories/miles-factory";
-import { any, string } from "joi";
 
 const api = supertest(app);
 
@@ -15,7 +14,6 @@ describe("POST /miles", () => {
 
   it("should return code and miles", async () => {
     const trip = await generatePostMiles();
-    console.log(trip);
 
     const { body } = await api.post("/miles").send(trip);
     expect(body).toEqual(
@@ -26,4 +24,22 @@ describe("POST /miles", () => {
     )
   });
 
+})
+
+describe("GET /miles:code", () => {
+    
+    it("should get miles by code", async () => {
+        const trip = await generatePostMiles();
+        await generateMiles(trip.code);
+
+        const { body } = await api.get(`/miles/${trip.code}`);
+        console.log(body);
+        expect(body).toEqual(
+            expect.objectContaining({
+                id: expect.any(Number),
+                code: expect.any(String),
+                miles: expect.any(Number)
+            })
+        )
+    })
 })
