@@ -1,7 +1,7 @@
 import { calculateMiles } from "../../src/services/miles-calculator-service";
 import { generatePostMilesUnitTest } from "./fatories/miles-factory-unit";
 import * as distanceCalculator from "../../src/services/distances-calculator-service";
-import { ServiceClass, AffiliateStatus } from "../../src/protocols"; // Importar os tipos
+import { ServiceClass, AffiliateStatus } from "../../src/protocols";
 
 
 beforeEach(() => {
