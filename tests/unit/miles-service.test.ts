@@ -1,6 +1,6 @@
-import { generateMilesForTrip } from "../../src/services/miles-service";
+import { generateMilesForTrip, getMilesFromCode } from "../../src/services/miles-service";
 import * as milesRepository from "../../src/repositories/miles-repository";
-import { generateMilesUnitTest, generatePostMilesUnitTest } from "./fatories/miles-factory-unit";
+import { generateMilesByCode, generateMilesUnitTest, generatePostMilesUnitTest } from "./fatories/miles-factory-unit";
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -36,6 +36,18 @@ describe("Miles Service Unit Testing", () => {
             type: "conflict",
             message: `Miles already registered for code ${tripData.code}`
           })
+    });
+
+    it("should get miles by code", async () => {
+        const tripData = await generatePostMilesUnitTest();
+        const trip = await generateMilesByCode(tripData.code);
+
+        jest.spyOn(milesRepository, "findMiles").mockResolvedValueOnce(trip);
+
+        const result = await getMilesFromCode(tripData.code);
+
+        expect(milesRepository.findMiles).toHaveBeenCalled();
+        expect(result[0]).toEqual(trip[0]);
 
     });
 

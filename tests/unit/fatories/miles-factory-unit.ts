@@ -10,6 +10,15 @@ export async function generateMilesUnitTest() {
     }
 }
 
+export async function generateMilesByCode(code: string) {
+    return {
+        id: parseFloat((Math.random()).toFixed(4)),
+        code,
+        miles: parseFloat((Math.random()).toFixed(4))
+
+    }
+}
+
 export async function generatePostMilesUnitTest() {
 
     const services: ServiceClass[] = [ServiceClass.ECONOMIC, ServiceClass.ECONOMIC_PREMIUM, ServiceClass.EXECUTIVE, ServiceClass.FIRST_CLASS];
