@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 export async function generateMiles(code: string) {
     return await prisma.miles.create({
         data : { 
-            code: code,
+            code,
             miles: parseFloat((Math.random()).toFixed(4))
          }
     })
