@@ -48,8 +48,20 @@ describe("Miles Service Unit Testing", () => {
 
         expect(milesRepository.findMiles).toHaveBeenCalled();
         expect(result[0]).toEqual(trip[0]);
-
     });
+
+    it("should return error if miles not found for code", () => {
+        const code = "a";
+
+        jest.spyOn(milesRepository, "findMiles").mockResolvedValueOnce(null);
+
+        const promise = getMilesFromCode(code);
+
+        expect(promise).rejects.toEqual({
+            type: "not_found",
+            message: `Miles not found for code ${code}`
+          })
+    })
 
 })
 
